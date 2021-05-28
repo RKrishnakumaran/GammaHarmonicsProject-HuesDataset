@@ -1,65 +1,34 @@
 basePath = pwd; 
 
 % For all hues (0:10:350): i = 1 => 0 i = 36 => 350
-% for i = 1:36
-%     hue = (i-1)*10;
-%     Hue = num2str(hue);
-% %     dataPreProcessing('alpa', 'Color', Hue, basePath, 0);
-%     dataPreProcessing('tutu', 'Color', Hue, basePath, 0);
-% %     dataPreProcessing('kesari', 'Color', Hue, basePath, 0);
-%     disp(hue);
-% end
-
-% % Achromatic (SForiAchro for alpa and '37th' hue for tutu)
-% disp('Processing achromatic data')
-% dataPreProcessing('tutu', 'Color', '360', basePath, 1);
-% dataPreProcessing('alpa', 'SForiAchro', '360', basePath, 1);
-
-% reds = [1:3, 34:36];
-% for i = 1:length(reds)
-%     hue = (reds(i)-1)*10;
-%     Hue = num2str(hue);
-%     dataPreProcessing('M4', 'Color', Hue, basePath, 0);
-% end
-
-for i = 1:37
+for i = 1:36
     hue = (i-1)*10;
     Hue = num2str(hue);
-    dataPreProcessing('M4', 'Color', Hue, basePath, i == 37);
+    dataPreProcessing('alpa', 'Color', Hue, basePath, 0);
+    dataPreProcessing('tutu', 'Color', Hue, basePath, 0);
     disp(hue);
 end
 
-fig1
+% Achromatic (SForiAchro for alpa and '37th' hue for tutu)
+disp('Processing achromatic data')
+dataPreProcessing('tutu', 'Color', '360', basePath, 1);
+dataPreProcessing('alpa', 'SForiAchro', '360', basePath, 1);
 
 function dataPreProcessing(subjectName, expType, stimType, basePath, achroFlag)
 
     % Get Corresponding experiment/data
     subjectID = [subjectName expType];
-    isnoise = 0;
     if strcmp(subjectID,'alpaColor')
         subjectName = 'alpa';expDate = '301215'; protocolName = 'GRF_001'; % 488: Hue fullscreen
     elseif strcmp(subjectID,'tutuColor')
         subjectName = 'tutu'; expDate = '191016'; protocolName = 'GRF_001'; % 111: Hue fullscreen
-    elseif strcmp(subjectID,'kesariColor')
-        subjectName = 'kesari'; expDate = '050516'; protocolName = 'GRF_001'; % 307: Hue fullscreen
     elseif strcmp(subjectID,'alpaSForiAchro')
         subjectName = 'alpa'; expDate = '301215'; protocolName = 'GRF_005'; % SFOri - alpa Vinay
-    elseif strcmp(subjectID,'kesariSForiAchro')
-        subjectName = 'kesari'; expDate = '030516'; protocolName = 'GRF_002'; % SFOri - kesari Vinay
-    
-    saveFolder = fullfile(basePath, 'savedData', 'processedData', subjectName);
-    mkdir(saveFolder);    
-    
-    elseif strcmp(subjectName,'M4')
-        subjectName = 'tutu'; expDate = '191016'; protocolName = 'GRF_001'; % 111: Hue fullscreen
-        isnoise = 0.8; %0.9
-        factor = 0.8; % factor = .8, don't chnage, offset doesn't change with isnoise
-        saveFolder = fullfile(basePath, 'savedData', 'processedData', 'M4');
-        mkdir(saveFolder); 
     end
     
-%     saveFolder = fullfile(basePath, 'savedData', 'processedData', subjectName);
-%     mkdir(saveFolder);
+    saveFolder = fullfile(basePath, 'savedData', 'processedData', subjectName);
+    mkdir(saveFolder);  
+
     gridType = 'Microelectrode';
     folderSourceString = fullfile(basePath, expType);
     folderBase = fullfile(folderSourceString,'data',subjectName,gridType,expDate,protocolName);
@@ -157,25 +126,10 @@ function dataPreProcessing(subjectName, expType, stimType, basePath, achroFlag)
         load(fullfile(folderSpikes,['elec' num2str(highRMSElectrodes(i)) '_SID0']),'spikeData');
         % setdiff (0, 255)
         
-        if isnoise
-%             stLFPP = analogData(goodPos,stPos)';
-            blLFPP = analogData(goodPos,blPos)';
-%               stLFPP = (isnoise)*10^1.15*randn(size(analogData(goodPos,stPos)')) + (1-isnoise)*analogData(goodPos,stPos)';
-%               blLFPP = (isnoise)*10^1.15*randn(size(analogData(goodPos,stPos)')) + (1-isnoise)*analogData(goodPos,blPos)';
+        
+        stLFPP = analogData(goodPos,stPos)';
+        blLFPP = analogData(goodPos,blPos)';
 
-              stLFPP = factor*(isnoise)*blLFPP + (1-isnoise)*analogData(goodPos,stPos)';
-              
-%             we will have a mixing coefficient (rho) 
-%               we will generate white noise s.t it's psd is < 75% of
-%               minimum baseline psd
-%               noise is linearly mixed accordingly with rho, 
-%               new signal = rho*signal + (1-rho)*noise
-%               rho will range from 1 to 0.1 in log scale, [1, 1/3, 1/6, 1/12]
-%             disp('M4')
-        else
-            stLFPP = analogData(goodPos,stPos)';
-            blLFPP = analogData(goodPos,blPos)';
-        end
         
         stSpikes = cellfun(@(x) x(x>=stimPeriod(1) & x<=stimPeriod(2)), spikeData, 'UniformOutput', false);
         blSpikes = cellfun(@(x) x(x>=baselinePeriod(1) & x<=baselinePeriod(2)), spikeData, 'UniformOutput', false);
@@ -232,9 +186,6 @@ function dataPreProcessing(subjectName, expType, stimType, basePath, achroFlag)
     end
     
 % - Uncomment this to save
-    if isnoise
-       subjectName = 'M4';
-    end
     
     if achroFlag == 1
         save(fullfile(saveFolder, [subjectName 'Achro' '.mat']), 'phaseDiff','gammaFreq', ...

@@ -1,22 +1,26 @@
 % Compute GHratio, gammapower (dB) and phaseDifference for both hue cases and achromatic
 % takes data from savedData/processedData 
 basePath = pwd;
-subjectName = 'tutu'; % Change subjectname here
+subjectNames = ['alpa', 'tutu'];
 
-[ratioGH, powerGamma, freqGamma, freqHarmonic, PD] = deal({});
-% Color
-for i = 1:36
-    hue = (i-1)*10;
-    Hue = num2str(hue);
-    [ratioGH{i}, powerGamma{i}, freqGamma{i}, freqHarmonic{i}, PD{i}] = extractData(subjectName, 'Color', Hue, basePath);
-    disp(hue);
+for j = 1:length(subjectNames)
+    subjectName = subjectNames(j);
+    [ratioGH, powerGamma, freqGamma, freqHarmonic, PD] = deal({});
+    % Color
+    for i = 1:36
+        hue = (i-1)*10;
+        Hue = num2str(hue);
+        [ratioGH{i}, powerGamma{i}, freqGamma{i}, freqHarmonic{i}, PD{i}] = extractData(subjectName, 'Color', Hue, basePath);
+        disp(hue);
+    end
+    % Achromatic
+    i = 37;
+    [ratioGH{i}, powerGamma{i}, freqGamma{i}, freqHarmonic{i}, PD{i}] = extractData(subjectName, 'Achro', '360', basePath);
+
+    save(fullfile(basePath, 'Data', [subjectName 'GH' '.mat']), 'ratioGH', 'powerGamma', 'freqGamma', 'freqHarmonic');
+    save(fullfile(basePath, 'Data', [subjectName 'PD' '.mat']), 'PD');
 end
-% Achromatic
-i = 37;
-[ratioGH{i}, powerGamma{i}, freqGamma{i}, freqHarmonic{i}, PD{i}] = extractData(subjectName, 'Achro', '360', basePath);
 
-save(fullfile(basePath, 'Data', [subjectName 'GH' '.mat']), 'ratioGH', 'powerGamma', 'freqGamma', 'freqHarmonic');
-save(fullfile(basePath, 'Data', [subjectName 'PD' '.mat']), 'PD');
 
 function [ratioGH, powerGamma, freqGamma, freqHarmonic, PD] = extractData(subjectName, expType, stimType, basePath)
     saveFolder = fullfile(basePath, 'savedData', 'processedData', subjectName);
