@@ -2,4 +2,4 @@
 preProcessData
 
 %% Compute and store Gamma power, peak frequency ratios and phase differences for all hues
-getGHratio_GammPower_PD
+getGHratio_andPD
