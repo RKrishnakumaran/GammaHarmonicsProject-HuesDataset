@@ -24,7 +24,7 @@ end
 
 function [ratioGH, powerGamma, freqGamma, freqHarmonic, PD] = extractData(subjectName, expType, stimType, basePath)
     saveFolder = fullfile(basePath, 'savedData', 'processedData', subjectName);
-    gammaRangeHz = [30 70]; % Hz
+    gammaRangeHz = [28 70]; % Hz
     maxHarmFreq = 140; % Hz
     GHwidth = 12; % Hz
     if strcmp(expType,'Achro')

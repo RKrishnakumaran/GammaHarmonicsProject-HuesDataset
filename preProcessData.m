@@ -106,7 +106,7 @@ function dataPreProcessing(subjectName, expType, stimType, basePath, achroFlag)
 
     n = 4; % order of butterWorth Filtering of gamma and harmonic signals
     delta = 10; % for filtfilt signal filtering
-    gammaRangeHz = [30 70]; % Hz
+    gammaRangeHz = [28 70]; % Hz
     maxHarmFreq = 140; %Hz
     GHwidth = 12; % Hz
    
