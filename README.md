@@ -17,7 +17,7 @@ Overview of Codes: The following scripts are to be run in order to replicate the
 
  <!> Requires **Signal Processing Toolkit** for signal filtering and phase analysis. 
 
- <!> Requires **Circstat** toolbox by _Philipp Berens_ (https://www.mathworks.com/matlabcentral/fileexchange/10676-circular-statistics-toolbox-directional-statistics).
+ <!> Requires **Circstat** toolbox by _Philipp Berens_ for directional statistics. (https://www.mathworks.com/matlabcentral/fileexchange/10676-circular-statistics-toolbox-directional-statistics).
   
 * _Fig2.m_ - performs analysis of peak frequencies of gamma and subsequent bump and generates Fig 2
 
