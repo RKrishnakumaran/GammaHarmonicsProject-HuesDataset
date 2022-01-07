@@ -9,7 +9,7 @@ Data collected from Microelectrode arrays implanted in V1 of macaque subjects M1
 
 ############################################
 
-Overview of Codes: The following scripts are to be run in order to replicate the analysis and data Figures in the paper.
+Overview of Codes: The following scripts, run in order, would replicate the gamma-harmonic analyses and Figures 2 and 5 in the paper from the LFP data.
 
 * _prepareData.m_ - performs Multitaper and phase analyses on LFP data for each subject and saves the output for use in Figure codes.
 
