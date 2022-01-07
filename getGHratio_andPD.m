@@ -1,10 +1,10 @@
 % Compute GHratio, gammapower (dB) and phaseDifference for both hue cases and achromatic
 % takes data from savedData/processedData 
 basePath = pwd;
-subjectNames = ['alpa', 'tutu'];
+subjectNames = {'alpa', 'tutu'};
 
 for j = 1:length(subjectNames)
-    subjectName = subjectNames(j);
+    subjectName = subjectNames{j};
     [ratioGH, powerGamma, freqGamma, freqHarmonic, PD] = deal({});
     % Color
     for i = 1:36
