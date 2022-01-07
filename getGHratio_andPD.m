@@ -16,7 +16,7 @@ for j = 1:length(subjectNames)
     % Achromatic
     i = 37;
     [ratioGH{i}, powerGamma{i}, freqGamma{i}, freqHarmonic{i}, PD{i}] = extractData(subjectName, 'Achro', '360', basePath);
-
+    mkdir(fullfile(basePath, 'Data'));
     save(fullfile(basePath, 'Data', [subjectName 'GH' '.mat']), 'ratioGH', 'powerGamma', 'freqGamma', 'freqHarmonic');
     save(fullfile(basePath, 'Data', [subjectName 'PD' '.mat']), 'PD');
 end
