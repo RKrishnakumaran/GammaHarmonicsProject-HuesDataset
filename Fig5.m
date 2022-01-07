@@ -237,10 +237,9 @@ tutuPDrtesthues = wrapTo360(circ_rtest(deg2rad(meanPD)));
 %%
 f = f6; f.WindowState='maximized';   postformatFig;
 %%
-savefig(gcf, [destination, 'Fig6_Draft8_blackErrorbars.fig']);
-print([destination, 'Fig6_Draft8_blackErrorbars.png'],'-dpng','-r480');
-mkdir([destination, '/Draft 9/']);
-print([destination, '/Draft 9/Fig5.tif'],'-dtiff','-r480');
+savefig(gcf, [destination, 'Fig5.fig']);
+print([destination, 'Fig5.png'],'-dpng','-r480');
+print([destination, 'Fig5.tif'],'-dtiff','-r480');
 
 %%
 disp('Rayleigh tested')

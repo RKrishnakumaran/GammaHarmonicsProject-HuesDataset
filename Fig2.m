@@ -161,10 +161,9 @@ f = f3; f.WindowState = 'maximized'; postformatFig;
 
 %%
 f = gcf;
-savefig(f, [destination, 'Fig3_new_2SE_Draft_8.fig']);
-print([destination, 'Fig3_new_2SE_Draft_8.png'],'-dpng','-r480');
-mkdir([destination, '/Draft 9'])
-print([destination, '/Draft 9/Fig2.tif'],'-dtiff','-r480');
+savefig(f, [destination, 'Fig2.fig']);
+print([destination, 'Fig2.png'],'-dpng','-r480');
+print([destination, 'Fig2.tif'],'-dtiff','-r480');
 disp('printed');
 
 %%
