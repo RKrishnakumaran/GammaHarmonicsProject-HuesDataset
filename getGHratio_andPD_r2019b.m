@@ -16,7 +16,7 @@ for j = 1:length(subjectNames)
     % Achromatic
     i = 37;
     [ratioGH{i}, powerGamma{i}, freqGamma{i}, freqHarmonic{i}, PD{i}] = extractData(subjectName, 'Achro', '360', basePath);
-    mkdir(fullfile(basePath, 'Data'))
+    mkdir(fullfile(basePath, 'Data'));
     save(fullfile(basePath, 'Data', [subjectName 'GH' '.mat']), 'ratioGH', 'powerGamma', 'freqGamma', 'freqHarmonic');
     save(fullfile(basePath, 'Data', [subjectName 'PD' '.mat']), 'PD');
 end
@@ -38,10 +38,9 @@ function [ratioGH, powerGamma, freqGamma, freqHarmonic, PD] = extractData(subjec
     for k = 1:e
         powerDB = 10*(log10(mean(psdST(:,:,k),2)) - log10(mean(psdBL(:,:,k),2)));
         
-        pfp = findpeaks(powerDB); loc=pfp.loc; pk = powerDB(loc);
+        [pk, loc] = findpeaks(powerDB);
         pkG = findpeaks(powerDB(gammaRangeHz(1)/2+1:gammaRangeHz(2)/2+1));
-        temppdb = powerDB(gammaRangeHz(1)/2+1:gammaRangeHz(2)/2+1); 
-        pkG = temppdb(pkG.loc); 
+
         pGG = max(pkG);
         fG = freqVals(loc(find(pk == pGG)));
         lG = loc(find(pk == pGG));
