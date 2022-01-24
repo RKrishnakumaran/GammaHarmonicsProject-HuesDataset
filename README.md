@@ -11,7 +11,7 @@ Data collected from Microelectrode arrays implanted in V1 of macaque subjects M1
 
 Overview of Codes: The following scripts, run in order, would replicate the gamma-harmonic analyses and Figures 2 and 5 in the paper from the LFP data.
 
-* _prepareData.m_ - performs Multitaper and phase analyses on LFP data for each subject and saves the output for use in Figure codes.
+* _prepareData_r2019b.m (for MATLAB R2019b release)_ or _prepareData.m (for future releases)_ - performs Multitaper and phase analyses on LFP data for each subject and saves the output for use in Figure codes.
 
  <!> Requires **CHRONUX toolbox** (http://chronux.org/; tested on _version 2.00_) for Multitaper analysis 
 
